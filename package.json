@@ -4,9 +4,9 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"check": "pnpm run --filter @ascorbic/* check",
-		"test": "pnpm run --filter @ascorbic/* test",
-		"build": "pnpm run --filter @ascorbic/* build"
+		"check": "pnpm run --filter process-ancestry check",
+		"test": "pnpm run --filter process-ancestry test",
+		"build": "pnpm run --filter process-ancestry build"
 	},
 	"keywords": [],
 	"author": "Matt Kane",

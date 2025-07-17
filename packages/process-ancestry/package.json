@@ -1,0 +1,40 @@
+{
+  "name": "process-ancestry",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean",
+    "dev": "tsup src/index.ts --format esm --dts --watch",
+    "prepublishOnly": "node --run build",
+    "check": "publint && attw --pack . --ignore-rules=cjs-resolves-to-esm",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.2",
+    "@types/feedparser": "^2.2.8",
+    "@types/node": "^22.16.4",
+    "publint": "^0.3.12",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ascorbic/process-ancestry.git",
+    "directory": "packages/process-ancestry"
+  },
+  "homepage": "https://github.com/ascorbic/process-ancestry",
+  "keywords": [],
+  "author": "Matt Kane",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

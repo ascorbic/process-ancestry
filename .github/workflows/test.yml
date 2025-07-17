@@ -5,7 +5,11 @@ on:
     branches: [main]
 jobs:
   test:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node-version: [18, 20, 22, 24]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -15,9 +19,20 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          cache: "pnpm"
+          node-version: ${{ matrix.node-version }}
           check-latest: true
           registry-url: "https://registry.npmjs.org"
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
       - name: Install dependencies
         run: |
           corepack enable
@@ -26,3 +41,5 @@ jobs:
         run: pnpm build
       - name: Test
         run: pnpm test
+      - name: Check package
+        run: pnpm check
