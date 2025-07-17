@@ -4,8 +4,9 @@ import getProcessAncestry from "../src/index.js";
 describe("getProcessAncestry", () => {
   it("should return process ancestry for current process", () => {
     const ancestry = getProcessAncestry();
+    console.log("Ancestry:", ancestry);
     expect(Array.isArray(ancestry)).toBe(true);
-    
+
     // Should have at least one parent process
     if (ancestry.length > 0) {
       const first = ancestry[0]!;
@@ -17,11 +18,21 @@ describe("getProcessAncestry", () => {
   });
 
   it("should validate PID parameter", () => {
-    expect(() => getProcessAncestry(-1)).toThrow("PID must be a positive integer");
-    expect(() => getProcessAncestry(0)).toThrow("PID must be a positive integer");
-    expect(() => getProcessAncestry(1.5)).toThrow("PID must be a positive integer");
-    expect(() => getProcessAncestry("123" as any)).toThrow("PID must be a positive integer");
-    expect(() => getProcessAncestry(null as any)).toThrow("PID must be a positive integer");
+    expect(() => getProcessAncestry(-1)).toThrow(
+      "PID must be a positive integer",
+    );
+    expect(() => getProcessAncestry(0)).toThrow(
+      "PID must be a positive integer",
+    );
+    expect(() => getProcessAncestry(1.5)).toThrow(
+      "PID must be a positive integer",
+    );
+    expect(() => getProcessAncestry("123" as any)).toThrow(
+      "PID must be a positive integer",
+    );
+    expect(() => getProcessAncestry(null as any)).toThrow(
+      "PID must be a positive integer",
+    );
   });
 
   it("should handle non-existent PID gracefully", () => {
@@ -38,4 +49,4 @@ describe("getProcessAncestry", () => {
     // Init process should have no parents or very few
     expect(ancestry.length).toBeLessThanOrEqual(1);
   });
-})
+});
