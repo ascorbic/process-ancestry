@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import getProcessAncestry from "../src/index.js";
+import { getProcessAncestry } from "../src/index.js";
 
 describe("getProcessAncestry", () => {
   it("should return process ancestry for current process", () => {
