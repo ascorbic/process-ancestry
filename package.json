@@ -1,7 +1,7 @@
 {
   "name": "process-ancestry-monorepo",
   "version": "1.0.0",
-  "description": "Cross-platform Node.js library for retrieving process ancestry information",
+  "description": "Cross-platform Node.js library for retrieving process ancestry information on Unix/Linux, macOS, and Windows",
   "private": true,
   "scripts": {
     "check": "pnpm run --filter process-ancestry check",
@@ -16,6 +16,8 @@
     "parent",
     "cross-platform",
     "unix",
+    "linux",
+    "macos",
     "windows"
   ],
   "author": "Matt Kane",

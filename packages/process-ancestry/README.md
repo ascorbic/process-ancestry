@@ -1,10 +1,10 @@
 # process-ancestry
 
-A cross-platform Node.js library for retrieving process ancestry information. Get the parent process chain for any process ID on Unix/Linux and Windows systems.
+A cross-platform Node.js library for retrieving process ancestry information. Get the parent process chain for any process ID on Unix/Linux, macOS, and Windows systems.
 
 ## Features
 
-- **Cross-platform**: Works on Unix/Linux (using `ps`) and Windows (using `wmic`)
+- **Cross-platform**: Works on Unix/Linux/macOS (using `ps`) and Windows (using `wmic`)
 - **Robust**: Includes timeout handling, cycle detection, and comprehensive error handling
 - **TypeScript**: Full TypeScript support with type definitions
 - **Zero dependencies**: No external dependencies beyond Node.js built-ins
@@ -100,14 +100,14 @@ interface ProcessInfo {
 The library includes comprehensive error handling:
 
 - **Input validation**: Ensures PID is a positive integer
-- **Timeout protection**: Commands timeout after 5s (Unix) or 10s (Windows)
+- **Timeout protection**: Commands timeout after 5s (Unix/macOS) or 10s (Windows)
 - **Cycle detection**: Prevents infinite loops in corrupted process trees
 - **Depth limits**: Maximum traversal depth of 1000 levels
 - **Graceful failures**: Returns empty array for non-existent processes
 
 ## Platform Support
 
-- **Unix/Linux**: Uses `ps -p <pid> -o pid=,ppid=,comm=`
+- **Unix/Linux/macOS**: Uses `ps -p <pid> -o pid=,ppid=,comm=`
 - **Windows**: Uses `wmic process where (ProcessId=<pid>) get ProcessId,ParentProcessId,CommandLine /format:csv`
 
 ## Examples
