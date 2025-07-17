@@ -1,16 +1,30 @@
 {
-	"name": "astro-loaders",
+	"name": "process-ancestry-monorepo",
 	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
+	"description": "Cross-platform Node.js library for retrieving process ancestry information",
+	"private": true,
 	"scripts": {
 		"check": "pnpm run --filter process-ancestry check",
 		"test": "pnpm run --filter process-ancestry test",
-		"build": "pnpm run --filter process-ancestry build"
+		"build": "pnpm run --filter process-ancestry build",
+		"dev": "pnpm run --filter process-ancestry dev"
 	},
-	"keywords": [],
+	"keywords": [
+		"process",
+		"ancestry",
+		"pid",
+		"parent",
+		"cross-platform",
+		"unix",
+		"windows"
+	],
 	"author": "Matt Kane",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ascorbic/process-ancestry.git"
+	},
+	"homepage": "https://github.com/ascorbic/process-ancestry",
 	"devDependencies": {
 		"@changesets/cli": "^2.29.5",
 		"@types/node": "^22.16.4",
