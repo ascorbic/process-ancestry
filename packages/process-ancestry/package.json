@@ -1,7 +1,7 @@
 {
   "name": "process-ancestry",
   "version": "0.0.0",
-  "description": "",
+  "description": "Cross-platform Node.js library for retrieving process ancestry information",
   "type": "module",
   "main": "dist/index.js",
   "files": [
@@ -31,7 +31,16 @@
     "directory": "packages/process-ancestry"
   },
   "homepage": "https://github.com/ascorbic/process-ancestry",
-  "keywords": [],
+  "keywords": [
+    "process",
+    "ancestry",
+    "pid",
+    "parent",
+    "cross-platform",
+    "unix",
+    "windows",
+    "process-tree"
+  ],
   "author": "Matt Kane",
   "license": "MIT",
   "engines": {
