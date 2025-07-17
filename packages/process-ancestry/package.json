@@ -1,7 +1,7 @@
 {
   "name": "process-ancestry",
   "version": "0.0.0",
-  "description": "Cross-platform Node.js library for retrieving process ancestry information",
+  "description": "Cross-platform Node.js library for retrieving process ancestry information on Unix/Linux, macOS, and Windows",
   "type": "module",
   "main": "dist/index.js",
   "files": [
@@ -38,6 +38,8 @@
     "parent",
     "cross-platform",
     "unix",
+    "linux",
+    "macos",
     "windows",
     "process-tree"
   ],
