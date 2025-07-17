@@ -3,25 +3,25 @@ import type { ProcessInfo } from "../types";
 
 function getProcessInfo(pid: number): ProcessInfo | null {
   try {
-    const output = execSync(`ps -p ${pid} -o pid=,ppid=,comm=`, {
+    const output = execSync(`ps -p ${pid} -o pid=,ppid=,command=`, {
       encoding: "utf8",
       timeout: 5000, // 5 second timeout
     }).trim();
-    
+
     if (!output) {
       return null;
     }
-    
+
     const [pidStr, ppidStr, ...commandParts] = output.split(/\s+/);
-    
+
     // Validate parsed values
     const parsedPid = pidStr ? parseInt(pidStr, 10) : NaN;
     const parsedPpid = ppidStr ? parseInt(ppidStr, 10) : NaN;
-    
+
     if (isNaN(parsedPid) || isNaN(parsedPpid)) {
       return null;
     }
-    
+
     return {
       pid: parsedPid,
       ppid: parsedPpid,
@@ -48,12 +48,12 @@ export default function getAncestryUnix(startPid: number): Array<ProcessInfo> {
       console.warn(`Detected cycle in process tree at PID ${currentPid}`);
       break;
     }
-    
+
     visited.add(currentPid);
-    
+
     const info = getProcessInfo(currentPid);
     if (!info || info.ppid === 0 || info.ppid === 1) break;
-    
+
     result.push(info);
     currentPid = info.ppid;
     maxDepth--;

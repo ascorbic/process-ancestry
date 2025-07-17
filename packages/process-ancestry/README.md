@@ -21,7 +21,7 @@ npm install process-ancestry
 ### Basic Usage
 
 ```javascript
-import getProcessAncestry from "process-ancestry";
+import { getProcessAncestry } from "process-ancestry";
 
 // Get ancestry for current process
 const ancestry = getProcessAncestry();
@@ -47,21 +47,6 @@ console.log(ancestry);
     command: "bash",
   },
 ];
-```
-
-### TypeScript Usage
-
-```typescript
-import getProcessAncestry from "process-ancestry";
-import type { ProcessInfo } from "process-ancestry";
-
-const ancestry: ProcessInfo[] = getProcessAncestry();
-
-ancestry.forEach((process: ProcessInfo) => {
-  console.log(
-    `PID: ${process.pid}, Parent: ${process.ppid}, Command: ${process.command}`,
-  );
-});
 ```
 
 ## API Reference
@@ -95,50 +80,10 @@ interface ProcessInfo {
 }
 ```
 
-## Error Handling
-
-The library includes comprehensive error handling:
-
-- **Input validation**: Ensures PID is a positive integer
-- **Timeout protection**: Commands timeout after 5s (Unix/macOS) or 10s (Windows)
-- **Cycle detection**: Prevents infinite loops in corrupted process trees
-- **Depth limits**: Maximum traversal depth of 1000 levels
-- **Graceful failures**: Returns empty array for non-existent processes
-
 ## Platform Support
 
-- **Unix/Linux/macOS**: Uses `ps -p <pid> -o pid=,ppid=,comm=`
+- **Unix/Linux/macOS**: Uses `ps -p <pid> -o pid=,ppid=,command=`
 - **Windows**: Uses `wmic process where (ProcessId=<pid>) get ProcessId,ParentProcessId,CommandLine /format:csv`
-
-## Examples
-
-### Find all parent processes
-
-```javascript
-import getProcessAncestry from "process-ancestry";
-
-const ancestry = getProcessAncestry();
-if (ancestry.length > 0) {
-  console.log(`Current process has ${ancestry.length} parent processes:`);
-  ancestry.forEach((proc, index) => {
-    console.log(`${index + 1}. PID ${proc.pid}: ${proc.command || "unknown"}`);
-  });
-} else {
-  console.log("No parent processes found (likely init process)");
-}
-```
-
-### Find root parent process
-
-```javascript
-import getProcessAncestry from "process-ancestry";
-
-const ancestry = getProcessAncestry();
-const rootParent = ancestry[ancestry.length - 1];
-if (rootParent) {
-  console.log(`Root parent: PID ${rootParent.pid} (${rootParent.command})`);
-}
-```
 
 ## Development
 
