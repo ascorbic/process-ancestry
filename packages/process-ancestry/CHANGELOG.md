@@ -1,5 +1,11 @@
 # process-ancestry
 
+## 0.0.2
+
+### Patch Changes
+
+- [#7](https://github.com/ascorbic/process-ancestry/pull/7) [`f768595`](https://github.com/ascorbic/process-ancestry/commit/f76859526d46913c75e69a9ca3330ee7dcc308e9) Thanks [@ascorbic](https://github.com/ascorbic)! - Include full arguments in Unix command output
+
 ## 0.0.1
 
 ### Patch Changes
