@@ -1,35 +1,36 @@
 {
-	"name": "process-ancestry-monorepo",
-	"version": "1.0.0",
-	"description": "Cross-platform Node.js library for retrieving process ancestry information",
-	"private": true,
-	"scripts": {
-		"check": "pnpm run --filter process-ancestry check",
-		"test": "pnpm run --filter process-ancestry test",
-		"build": "pnpm run --filter process-ancestry build",
-		"dev": "pnpm run --filter process-ancestry dev"
-	},
-	"keywords": [
-		"process",
-		"ancestry",
-		"pid",
-		"parent",
-		"cross-platform",
-		"unix",
-		"windows"
-	],
-	"author": "Matt Kane",
-	"license": "MIT",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/ascorbic/process-ancestry.git"
-	},
-	"homepage": "https://github.com/ascorbic/process-ancestry",
-	"devDependencies": {
-		"@changesets/cli": "^2.29.5",
-		"@types/node": "^22.16.4",
-		"prettier": "^3.6.2",
-		"vitest": "^3.2.4"
-	},
-	"packageManager": "pnpm@10.13.1"
+  "name": "process-ancestry-monorepo",
+  "version": "1.0.0",
+  "description": "Cross-platform Node.js library for retrieving process ancestry information",
+  "private": true,
+  "scripts": {
+    "check": "pnpm run --filter process-ancestry check",
+    "test": "pnpm run --filter process-ancestry test",
+    "build": "pnpm run --filter process-ancestry build",
+    "dev": "pnpm run --filter process-ancestry dev"
+  },
+  "keywords": [
+    "process",
+    "ancestry",
+    "pid",
+    "parent",
+    "cross-platform",
+    "unix",
+    "windows"
+  ],
+  "author": "Matt Kane",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ascorbic/process-ancestry.git"
+  },
+  "homepage": "https://github.com/ascorbic/process-ancestry",
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.5.1",
+    "@changesets/cli": "^2.29.5",
+    "@types/node": "^22.16.4",
+    "prettier": "^3.6.2",
+    "vitest": "^3.2.4"
+  },
+  "packageManager": "pnpm@10.13.1"
 }
