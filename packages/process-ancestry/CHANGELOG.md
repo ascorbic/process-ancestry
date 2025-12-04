@@ -1,5 +1,11 @@
 # process-ancestry
 
+## 0.1.0
+
+### Minor Changes
+
+- [#9](https://github.com/ascorbic/process-ancestry/pull/9) [`029dd13`](https://github.com/ascorbic/process-ancestry/commit/029dd13763a3cac3863129435aef29b05ef74379) Thanks [@ascorbic](https://github.com/ascorbic)! - Exports `ProcessInfo` type
+
 ## 0.0.2
 
 ### Patch Changes
