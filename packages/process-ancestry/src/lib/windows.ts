@@ -27,7 +27,7 @@ function getProcessInfoPowerShell(pid: number): ProcessInfo | null {
     }
 
     // Parse CSV - second line is the data
-    // Format: "CommandLine","ParentProcessId","ProcessId"
+    // Format: "ProcessId","ParentProcessId","CommandLine"
     const dataLine = lines[1];
 
     // Parse CSV properly handling quoted fields with commas
@@ -37,7 +37,7 @@ function getProcessInfoPowerShell(pid: number): ProcessInfo | null {
       return null;
     }
 
-    const [commandLine, parentPid, thisPid] = fields;
+    const [thisPid, parentPid, commandLine] = fields;
 
     const parsedPid = thisPid ? parseInt(thisPid.trim(), 10) : NaN;
     const parsedPpid = parentPid ? parseInt(parentPid.trim(), 10) : NaN;
