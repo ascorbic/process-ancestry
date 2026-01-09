@@ -1,50 +1,13 @@
 import { execSync } from "node:child_process";
 import type { ProcessInfo } from "../types";
 
-// Cache which PowerShell executable is available (pwsh is faster than powershell)
-let psExecutable: "pwsh" | "powershell" | null = null;
-
-/**
- * Get the PowerShell executable to use, preferring pwsh (PowerShell Core) for faster startup
- */
-function getPowerShellExecutable(): "pwsh" | "powershell" | null {
-  if (psExecutable !== null) {
-    return psExecutable;
-  }
-
-  // Try pwsh first (PowerShell Core) - much faster startup time
-  try {
-    execSync("pwsh -Version", { encoding: "utf8", timeout: 5000, windowsHide: true });
-    psExecutable = "pwsh";
-    return psExecutable;
-  } catch {
-    // pwsh not available
-  }
-
-  // Fall back to Windows PowerShell
-  try {
-    execSync("powershell -Version", { encoding: "utf8", timeout: 5000, windowsHide: true });
-    psExecutable = "powershell";
-    return psExecutable;
-  } catch {
-    // powershell not available
-  }
-
-  return null;
-}
-
 /**
  * Get process info using PowerShell's Get-CimInstance (modern method)
  */
 function getProcessInfoPowerShell(pid: number): ProcessInfo | null {
-  const ps = getPowerShellExecutable();
-  if (!ps) {
-    return null;
-  }
-
   try {
     const output = execSync(
-      `${ps} -NoLogo -NoProfile -NonInteractive -Command "Get-CimInstance Win32_Process -Filter 'ProcessId=${pid}' | Select-Object ProcessId,ParentProcessId,CommandLine | ConvertTo-Csv -NoTypeInformation"`,
+      `powershell -NoLogo -NoProfile -NonInteractive -Command "Get-CimInstance Win32_Process -Filter 'ProcessId=${pid}' | Select-Object ProcessId,ParentProcessId,CommandLine | ConvertTo-Csv -NoTypeInformation"`,
       {
         encoding: "utf8",
         timeout: 10000,
@@ -138,6 +101,16 @@ function getProcessInfoWmic(pid: number): ProcessInfo | null {
 }
 
 /**
+ * Strip surrounding quotes from a string
+ */
+function stripQuotes(str: string): string {
+  if (str.length >= 2 && str.startsWith('"') && str.endsWith('"')) {
+    return str.slice(1, -1);
+  }
+  return str;
+}
+
+/**
  * Parse a CSV line handling quoted fields that may contain commas
  */
 function parseCSVLine(line: string): string[] {
@@ -157,14 +130,14 @@ function parseCSVLine(line: string): string[] {
         inQuotes = !inQuotes;
       }
     } else if (char === "," && !inQuotes) {
-      fields.push(current);
+      fields.push(stripQuotes(current));
       current = "";
     } else {
       current += char;
     }
   }
 
-  fields.push(current);
+  fields.push(stripQuotes(current));
   return fields;
 }
 
