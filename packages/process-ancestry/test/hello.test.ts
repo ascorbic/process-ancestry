@@ -1,21 +1,30 @@
 import { describe, it, expect } from "vitest";
 import { getProcessAncestry } from "../src/index.js";
 
-describe("getProcessAncestry", () => {
-  it("should return process ancestry for current process", () => {
-    const ancestry = getProcessAncestry();
-    console.log("Ancestry:", ancestry);
-    expect(Array.isArray(ancestry)).toBe(true);
+// These tests spawn a real subprocess (`ps` on Unix, `pwsh`/`wmic` on Windows).
+// PowerShell cold start in particular can take several seconds on fresh CI
+// runners, so we use a generous timeout rather than the 5s vitest default.
+const SUBPROCESS_TIMEOUT_MS = 30_000;
 
-    // Should have at least one parent process
-    if (ancestry.length > 0) {
-      const first = ancestry[0]!;
-      expect(first).toHaveProperty("pid");
-      expect(first).toHaveProperty("ppid");
-      expect(typeof first.pid).toBe("number");
-      expect(typeof first.ppid).toBe("number");
-    }
-  });
+describe("getProcessAncestry", () => {
+  it(
+    "should return process ancestry for current process",
+    () => {
+      const ancestry = getProcessAncestry();
+      console.log("Ancestry:", ancestry);
+      expect(Array.isArray(ancestry)).toBe(true);
+
+      // Should have at least one parent process
+      if (ancestry.length > 0) {
+        const first = ancestry[0]!;
+        expect(first).toHaveProperty("pid");
+        expect(first).toHaveProperty("ppid");
+        expect(typeof first.pid).toBe("number");
+        expect(typeof first.ppid).toBe("number");
+      }
+    },
+    SUBPROCESS_TIMEOUT_MS,
+  );
 
   it("should validate PID parameter", () => {
     expect(() => getProcessAncestry(-1)).toThrow(
@@ -35,18 +44,26 @@ describe("getProcessAncestry", () => {
     );
   });
 
-  it("should handle non-existent PID gracefully", () => {
-    // Use a very high PID that likely doesn't exist
-    const ancestry = getProcessAncestry(999999);
-    expect(Array.isArray(ancestry)).toBe(true);
-    // Should return empty array for non-existent process
-    expect(ancestry.length).toBe(0);
-  });
+  it(
+    "should handle non-existent PID gracefully",
+    () => {
+      // Use a very high PID that likely doesn't exist
+      const ancestry = getProcessAncestry(999999);
+      expect(Array.isArray(ancestry)).toBe(true);
+      // Should return empty array for non-existent process
+      expect(ancestry.length).toBe(0);
+    },
+    SUBPROCESS_TIMEOUT_MS,
+  );
 
-  it("should handle PID 1 (init process)", () => {
-    const ancestry = getProcessAncestry(1);
-    expect(Array.isArray(ancestry)).toBe(true);
-    // Init process should have no parents or very few
-    expect(ancestry.length).toBeLessThanOrEqual(1);
-  });
+  it(
+    "should handle PID 1 (init process)",
+    () => {
+      const ancestry = getProcessAncestry(1);
+      expect(Array.isArray(ancestry)).toBe(true);
+      // Init process should have no parents or very few
+      expect(ancestry.length).toBeLessThanOrEqual(1);
+    },
+    SUBPROCESS_TIMEOUT_MS,
+  );
 });
